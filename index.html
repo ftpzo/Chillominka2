@@ -1059,26 +1059,22 @@
     </div>
 
     <div class="contact-grid">
-      <form class="contact-form reveal" action="https://formsubmit.co/minkachillo@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="Nuevo mensaje desde Chillominka">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://chillominka.com/gracias.html">
-        <input type="hidden" name="_template" value="table">
-        <div class="field">
-          <label for="nombre">Nombre completo</label>
-          <input id="nombre" name="nombre" type="text" placeholder="Escribe tu nombre" required>
-        </div>
-        <div class="field">
-          <label for="correo">Correo electrónico</label>
-          <input id="correo" name="email" type="email" placeholder="tucorreo@ejemplo.com" required>
-        </div>
-        <div class="field">
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos en qué podemos ayudarte" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-green" style="align-self:flex-start;">Enviar mensaje</button>
-        <div class="form-msg" id="formMsg">¡Gracias! Tu mensaje fue enviado correctamente. Te responderemos pronto.</div>
-      </form>
+    <form class="contact-form reveal" id="contactForm">
+  <div class="field">
+    <label for="nombre">Nombre completo</label>
+    <input id="nombre" name="name" type="text" placeholder="Escribe tu nombre" required>
+  </div>
+  <div class="field">
+    <label for="correo">Correo electrónico</label>
+    <input id="correo" name="email" type="email" placeholder="tucorreo@ejemplo.com" required>
+  </div>
+  <div class="field">
+    <label for="mensaje">Mensaje</label>
+    <textarea id="mensaje" name="message" placeholder="Cuéntanos en qué podemos ayudarte" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-green" style="align-self:flex-start;">Enviar mensaje</button>
+  <div class="form-msg" id="formMsg">¡Gracias! Tu mensaje fue enviado correctamente. Te responderemos pronto.</div>
+</form>
 
       <div class="contact-info reveal">
         <div class="contact-card">
