@@ -195,7 +195,7 @@ main{padding-top:78px;min-height:70vh;}
 .hero-banner .container{
   position:relative;
   z-index:1;
-  padding-top:calc(78px + 20px);
+  padding-top:calc(78px + 90px);
   padding-bottom:60px;
   max-width:100%;
   box-sizing:border-box;
