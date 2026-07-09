@@ -438,3 +438,24 @@ console.log('✓ Script.js cargado correctamente');
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape') cerrarPlanes();
   });
+var contactForm = document.getElementById('contactForm');
+if(contactForm){
+  contactForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var data = new FormData(contactForm);
+    fetch('https://formspree.io/f/maqggknq', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response){
+      if(response.ok){
+        contactForm.reset();
+        window.location.href = 'https://chillominka.com/gracias.html';
+      } else {
+        alert('Hubo un error. Intenta de nuevo.');
+      }
+    }).catch(function(){
+      alert('Hubo un error. Intenta de nuevo.');
+    });
+  });
+}
