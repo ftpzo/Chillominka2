@@ -1059,14 +1059,13 @@ function crearTarjetaComentario(id, c) {
 
   var fecha = c.fecha ? new Date(c.fecha).toLocaleDateString('es-EC', { day:'numeric', month:'short', year:'numeric' }) : '';
 
-  
   var user = typeof auth !== 'undefined' ? auth.currentUser : null;
   var btnEliminar = (user && user.uid === c.uid)
     ? '<button class="comentario-eliminar" onclick="eliminarComentario(\'' + id + '\',\'' + c.empId + '\')" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>'
     : '';
 
   div.innerHTML =
-    '<img src="' + (c.userFoto || SVG_AVATAR_DEFAULT) + '" alt="' + (c.userName || '') + '" class="comentario-avatar-item" onclick="verPerfilUsuario(\'' + c.uid + '\')" title="Ver perfil de ' + (c.userName || 'usuario') + '">' +
+    '<img src="' + (c.userFoto || SVG_AVATAR_DEFAULT) + '" alt="' + (c.userName || '') + '" class="comentario-avatar-item" id="avatar-com-' + id + '" onclick="verPerfilUsuario(\'' + c.uid + '\')" title="Ver perfil de ' + (c.userName || 'usuario') + '">' +
     '<div class="comentario-body">' +
       '<div class="comentario-header">' +
         '<span class="comentario-nombre" onclick="verPerfilUsuario(\'' + c.uid + '\')">' + (c.userName || 'Usuario') + '</span>' +
@@ -1075,6 +1074,16 @@ function crearTarjetaComentario(id, c) {
       '</div>' +
       '<p class="comentario-texto">' + escapeHtml(c.texto) + '</p>' +
     '</div>';
+
+  // Cargar foto actualizada desde Firestore
+  if (c.uid) {
+    db.collection('usuarios').doc(c.uid).get().then(function(doc) {
+      if (!doc.exists) return;
+      var fotoActual = doc.data().foto || c.userFoto || SVG_AVATAR_DEFAULT;
+      var imgEl = document.getElementById('avatar-com-' + id);
+      if (imgEl) imgEl.src = fotoActual;
+    });
+  }
 
   return div;
 }
