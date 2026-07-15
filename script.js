@@ -454,7 +454,7 @@ console.log('✓ Script.js cargado correctamente');
   var script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
   script.onload = function(){
-    emailjs.init('8rzntos1v1lF6ntRFhPLC');
+    emailjs.init('S8OjmrqIz6xcztn0U');
     var contactForm = document.getElementById('contactForm');
     if(!contactForm) return;
     contactForm.addEventListener('submit', function(e){
