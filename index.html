@@ -2202,67 +2202,79 @@
 </div>
 
 <script src="script.js"></script>
-  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/open-dyslexic">
 
-<button class="acc-fab" id="accFab" onclick="toggleAccPanel()" aria-label="Opciones de accesibilidad" title="Accesibilidad">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M12 6v6m0 0-3 4m3-4 3 4M9 12H6m6 0h3"/></svg>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap">
+
+<button class="acc-fab" id="accFab" onclick="toggleAccPanel()" aria-label="Opciones de accesibilidad">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v5M9 11l-3 5M15 11l3 5M9 16h6"/></svg>
 </button>
 
 <div class="acc-panel" id="accPanel">
-  <p class="acc-panel-title">Accesibilidad</p>
-
-  <div class="acc-item" onclick="toggleDarkMode()">
-    <div class="acc-item-left">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <div>
-        <div class="acc-label">Modo oscuro</div>
-        <div class="acc-sub">Reduce la fatiga visual</div>
-      </div>
+  <div class="acc-panel-header">
+    <span class="acc-panel-titulo">Accesibilidad</span>
+    <button class="acc-panel-close" onclick="toggleAccPanel()" aria-label="Cerrar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="acc-seccion-label">Visualización</div>
+  <button class="acc-opcion" id="btnDark" onclick="toggleDarkMode()">
+    <div class="acc-opcion-icono" style="background:#1a1a2e;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a0c4ff" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+    <div class="acc-opcion-texto">
+      <span class="acc-opcion-nombre">Modo oscuro</span>
+      <span class="acc-opcion-desc">Fondo oscuro, reduce la fatiga</span>
     </div>
     <span class="acc-toggle" id="tgDark"></span>
-  </div>
-
-  <div class="acc-item" onclick="toggleAltoContraste()">
-    <div class="acc-item-left">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
-      <div>
-        <div class="acc-label">Alto contraste</div>
-        <div class="acc-sub">Mejora la legibilidad</div>
-      </div>
+  </button>
+  <button class="acc-opcion" id="btnContraste" onclick="toggleAltoContraste()">
+    <div class="acc-opcion-icono" style="background:#000;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M12 2a10 10 0 0 1 0 20z" fill="#fff"/></svg>
+    </div>
+    <div class="acc-opcion-texto">
+      <span class="acc-opcion-nombre">Alto contraste</span>
+      <span class="acc-opcion-desc">Texto negro sobre fondo blanco</span>
     </div>
     <span class="acc-toggle" id="tgContraste"></span>
-  </div>
-
-  <div class="acc-item" onclick="toggleDislexia()">
-    <div class="acc-item-left">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
-      <div>
-        <div class="acc-label">Fuente dislexia</div>
-        <div class="acc-sub">Facilita la lectura</div>
-      </div>
+  </button>
+  <div class="acc-seccion-label" style="margin-top:4px;">Texto</div>
+  <button class="acc-opcion" id="btnDislexia" onclick="toggleDislexia()">
+    <div class="acc-opcion-icono" style="background:#e8f4fd;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d6a9f" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+    </div>
+    <div class="acc-opcion-texto">
+      <span class="acc-opcion-nombre">Fuente Lexend</span>
+      <span class="acc-opcion-desc">Facilita la lectura</span>
     </div>
     <span class="acc-toggle" id="tgDislexia"></span>
+  </button>
+  <div style="padding:0 2px;">
+    <div class="acc-seccion-label">Tamaño de texto</div>
+    <div class="acc-tamano-grid">
+      <button class="acc-tamano-btn active" id="sizeNormal" onclick="setTamano('normal')">
+        <span style="font-size:13px;">A</span><span>Normal</span>
+      </button>
+      <button class="acc-tamano-btn" id="sizeGrande" onclick="setTamano('grande')">
+        <span style="font-size:17px;">A</span><span>Grande</span>
+      </button>
+      <button class="acc-tamano-btn" id="sizeExtra" onclick="setTamano('extra')">
+        <span style="font-size:21px;">A</span><span>Extra</span>
+      </button>
+    </div>
   </div>
-
-  <div class="acc-item" onclick="toggleLector()">
-    <div class="acc-item-left">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-      <div>
-        <div class="acc-label">Lector de voz</div>
-        <div class="acc-sub">Lee texto al pasar el cursor</div>
-      </div>
+  <div class="acc-seccion-label" style="margin-top:4px;">Voz</div>
+  <button class="acc-opcion" id="btnLector" onclick="toggleLector()">
+    <div class="acc-opcion-icono" style="background:#fff0f6;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+    </div>
+    <div class="acc-opcion-texto">
+      <span class="acc-opcion-nombre">Lector de selección</span>
+      <span class="acc-opcion-desc">Selecciona texto para escucharlo</span>
     </div>
     <span class="acc-toggle" id="tgLector"></span>
-  </div>
-
-  <div style="margin-top:8px;">
-    <div class="acc-sub" style="margin-bottom:6px;">Tamaño de texto</div>
-    <div style="display:flex;gap:6px;">
-      <button class="acc-size-btn active" id="sizeNormal" onclick="setTamano('normal')">Normal</button>
-      <button class="acc-size-btn" id="sizeGrande" onclick="setTamano('grande')">Grande</button>
-      <button class="acc-size-btn" id="sizeExtra" onclick="setTamano('extra')">Extra</button>
-    </div>
-  </div>
+  </button>
 </div>
 </body>
 </html>
