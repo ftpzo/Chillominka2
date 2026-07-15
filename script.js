@@ -450,33 +450,38 @@ console.log('✓ Script.js cargado correctamente');
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape') cerrarPlanes();
   });
-var contactForm = document.getElementById('contactForm');
-if(contactForm){
-  contactForm.addEventListener('submit', function(e){
-    e.preventDefault();
-    var btn = contactForm.querySelector('button[type="submit"]');
-    if(btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
-    var data = new FormData(contactForm);
-    fetch('https://formspree.io/f/maqggknq', {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    }).then(function(response){
-      if(response.ok){
-        window.location.href = 'https://chillominka.com/gracias.html';
-      } else {
-        if(btn) { btn.disabled = false; btn.textContent = 'Enviar mensaje'; }
-        var msgEl = document.getElementById('formMsg');
-        if(msgEl){
-          msgEl.textContent = 'Error al enviar. Intenta de nuevo o escríbenos a minkachillo@gmail.com';
-          msgEl.style.cssText = 'display:block;background:#fdecea;color:#c0392b;border:1px solid #f5a4a4;border-radius:10px;padding:14px 16px;margin-top:12px;font-size:14px;';
-        }
-      }
-    }).catch(function(){
-      contactForm.submit();
+(function(){
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+  script.onload = function(){
+    emailjs.init('8rzntos1v1lF6ntRFhPLC');
+    var contactForm = document.getElementById('contactForm');
+    if(!contactForm) return;
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = contactForm.querySelector('button[type="submit"]');
+      var msgEl = document.getElementById('formMsg');
+      if(btn){ btn.disabled = true; btn.textContent = 'Enviando...'; }
+      var params = {
+        name:    document.getElementById('nombre').value,
+        email:   document.getElementById('correo').value,
+        message: document.getElementById('mensaje').value
+      };
+      emailjs.send('chillominka', 'template_wppn33s', params)
+        .then(function(){
+          window.location.href = 'https://chillominka.com/gracias.html';
+        })
+        .catch(function(err){
+          if(btn){ btn.disabled = false; btn.textContent = 'Enviar mensaje'; }
+          if(msgEl){
+            msgEl.textContent = 'Error al enviar. Intenta de nuevo o escríbenos a minkachillo@gmail.com';
+            msgEl.style.cssText = 'display:block;background:#fdecea;color:#c0392b;border:1px solid #f5a4a4;border-radius:10px;padding:14px 16px;margin-top:12px;font-size:14px;';
+          }
+        });
     });
-  });
-}
+  };
+  document.head.appendChild(script);
+})();
 
 
 
