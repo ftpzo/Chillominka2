@@ -2827,3 +2827,84 @@ model-viewer{display:block;}
 .cupon-dias {
   font-size: 11px; color: #aaa;
 }
+.acc-fab {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  z-index: 99999;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: #2d6a9f;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,.3);
+  transition: transform .2s, background .2s;
+}
+.acc-fab:hover { transform: scale(1.08); background: #1a5080; }
+
+.acc-panel {
+  position: fixed;
+  bottom: 152px;
+  right: 20px;
+  z-index: 99999;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  width: 290px;
+  padding: 18px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.15);
+}
+.acc-panel.open { display: flex; }
+.acc-panel-title {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: #888; margin: 0 0 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.acc-item {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px; border-radius: 10px;
+  cursor: pointer; border: 1px solid #eee;
+  background: #fafafa; transition: background .15s;
+  gap: 10px;
+}
+.acc-item:hover { background: #f0f4ff; }
+.acc-item-left { display: flex; align-items: center; gap: 10px; color: #555; }
+.acc-label { font-size: 13.5px; color: #222; font-weight: 500; }
+.acc-sub { font-size: 11px; color: #aaa; margin-top: 1px; }
+.acc-toggle {
+  display: inline-block;
+  width: 38px; height: 22px; border-radius: 22px;
+  background: #ddd; position: relative;
+  transition: background .2s; flex-shrink: 0; cursor: pointer;
+}
+.acc-toggle::after {
+  content: ''; position: absolute;
+  top: 3px; left: 3px;
+  width: 16px; height: 16px;
+  border-radius: 50%; background: #fff;
+  transition: left .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.acc-toggle.on { background: #2d6a9f; }
+.acc-toggle.on::after { left: 19px; }
+.acc-size-btn {
+  flex: 1; padding: 7px 4px; border-radius: 8px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid #ddd; background: #fafafa;
+  cursor: pointer; color: #555; transition: all .15s;
+}
+.acc-size-btn:hover { background: #e8f0fe; border-color: #2d6a9f; color: #2d6a9f; }
+.acc-size-btn.active { background: #2d6a9f; color: #fff; border-color: #2d6a9f; }
+
+body.acc-dark { filter: invert(1) hue-rotate(180deg); }
+body.acc-dark img, body.acc-dark video, body.acc-dark iframe { filter: invert(1) hue-rotate(180deg); }
+body.acc-contraste { filter: contrast(1.6) brightness(1.1); }
+body.acc-dislexia, body.acc-dislexia * { font-family: 'Open Dyslexic', sans-serif !important; }
+body.acc-size-grande { font-size: 118% !important; }
+body.acc-size-extra  { font-size: 140% !important; }
