@@ -454,7 +454,7 @@ console.log('✓ Script.js cargado correctamente');
   var script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
   script.onload = function(){
-    emailjs.init('S8OjmrqIz6xcztn0U');
+    emailjs.init('8rzntos1v1lF6ntRFhPLC');
     var contactForm = document.getElementById('contactForm');
     if(!contactForm) return;
     contactForm.addEventListener('submit', function(e){
@@ -753,7 +753,15 @@ function guardarPerfilPagina() {
       miembro:     nuevoMiem || 'Miembro de Chillominka'
     }, { merge: true });
   }).then(function() {
-    
+    // Actualizar nombre en todos los comentarios del usuario
+    return db.collection('comentarios').where('uid', '==', user.uid).get().then(function(snap) {
+      var batch = db.batch();
+      snap.forEach(function(doc) {
+        batch.update(doc.ref, { userName: nuevoNombre });
+      });
+      return batch.commit();
+    });
+  }).then(function() {
     var elNombre = document.getElementById('perfilPaginaNombre');
     var elDesc   = document.getElementById('perfilPaginaDesc');
     var elUbi    = document.getElementById('perfilInfoUbicacion');
@@ -762,11 +770,16 @@ function guardarPerfilPagina() {
     if (elDesc)   elDesc.textContent   = nuevaDesc;
     if (elUbi)    elUbi.textContent    = nuevaUbi  || 'Chillogallo, Quito, Ecuador';
     if (elMiem)   elMiem.textContent   = nuevoMiem || 'Miembro de Chillominka';
-    
     var navNomEl  = document.getElementById('avatarNavNombre');
     var dropNomEl = document.getElementById('avatarDropNombre');
     if (navNomEl)  navNomEl.textContent  = nuevoNombre.split(' ')[0];
     if (dropNomEl) dropNomEl.textContent = nuevoNombre;
+    // Actualizar nombre en los comentarios visibles en pantalla
+    document.querySelectorAll('.comentario-nombre').forEach(function(el) {
+      if (el.getAttribute('onclick') && el.getAttribute('onclick').includes(user.uid)) {
+        el.textContent = nuevoNombre;
+      }
+    });
     mostrarMsgEditor('¡Perfil actualizado correctamente!', true);
     setTimeout(function() { toggleEditarPerfil(); }, 1500);
   }).catch(function() {
