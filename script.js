@@ -1719,6 +1719,83 @@ function verificarCuponesCanjeados() {
       }
     });
 }
+var accLector = false;
+var accVozTimeout = null;
+
+function toggleAccPanel() {
+  document.getElementById('accPanel').classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  var panel = document.getElementById('accPanel');
+  var fab   = document.getElementById('accFab');
+  if (panel && fab && !panel.contains(e.target) && !fab.contains(e.target)) {
+    panel.classList.remove('open');
+  }
+});
+
+function toggleDarkMode() {
+  var tg = document.getElementById('tgDark');
+  tg.classList.toggle('on');
+  document.body.classList.toggle('acc-dark');
+  document.body.classList.remove('acc-contraste');
+  document.getElementById('tgContraste').classList.remove('on');
+}
+
+function toggleAltoContraste() {
+  var tg = document.getElementById('tgContraste');
+  tg.classList.toggle('on');
+  document.body.classList.toggle('acc-contraste');
+  document.body.classList.remove('acc-dark');
+  document.getElementById('tgDark').classList.remove('on');
+}
+
+function toggleDislexia() {
+  var tg = document.getElementById('tgDislexia');
+  tg.classList.toggle('on');
+  document.body.classList.toggle('acc-dislexia');
+}
+
+function toggleLector() {
+  var tg = document.getElementById('tgLector');
+  tg.classList.toggle('on');
+  accLector = !accLector;
+  if (!accLector && window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+function setTamano(t) {
+  document.querySelectorAll('.acc-size-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('size' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('active');
+  document.body.classList.remove('acc-size-grande','acc-size-extra');
+  if (t === 'grande') document.body.classList.add('acc-size-grande');
+  if (t === 'extra')  document.body.classList.add('acc-size-extra');
+}
+
+document.addEventListener('mouseover', function(e) {
+  if (!accLector) return;
+  var texto = '';
+  var el = e.target;
+  if (el.tagName === 'IMG') {
+    texto = el.alt || '';
+  } else if (el.tagName === 'INPUT' || el.tagName === 'BUTTON') {
+    texto = el.value || el.textContent || el.getAttribute('aria-label') || '';
+  } else {
+    texto = el.textContent ? el.textContent.trim().slice(0, 200) : '';
+  }
+  if (!texto || texto.length < 2) return;
+  if (window.speechSynthesis) {
+    clearTimeout(accVozTimeout);
+    accVozTimeout = setTimeout(function() {
+      window.speechSynthesis.cancel();
+      var utter = new SpeechSynthesisUtterance(texto);
+      utter.lang = 'es-ES';
+      utter.rate = 1;
+      window.speechSynthesis.speak(utter);
+    }, 400);
+  }
+});
 
 
 document.addEventListener('click', function(e) {
