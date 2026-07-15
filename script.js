@@ -473,8 +473,9 @@ console.log('✓ Script.js cargado correctamente');
         })
         .catch(function(err){
           if(btn){ btn.disabled = false; btn.textContent = 'Enviar mensaje'; }
+          var errDetalle = err && err.text ? err.text : JSON.stringify(err);
           if(msgEl){
-            msgEl.textContent = 'Error al enviar. Intenta de nuevo o escríbenos a minkachillo@gmail.com';
+            msgEl.textContent = 'Error: ' + errDetalle;
             msgEl.style.cssText = 'display:block;background:#fdecea;color:#c0392b;border:1px solid #f5a4a4;border-radius:10px;padding:14px 16px;margin-top:12px;font-size:14px;';
           }
         });
