@@ -1719,13 +1719,15 @@ function verificarCuponesCanjeados() {
       }
     });
 }
+
+
+
+
 var accLector = false;
-var accVozTimeout = null;
 
 function toggleAccPanel() {
   document.getElementById('accPanel').classList.toggle('open');
 }
-
 document.addEventListener('click', function(e) {
   var panel = document.getElementById('accPanel');
   var fab   = document.getElementById('accFab');
@@ -1733,72 +1735,55 @@ document.addEventListener('click', function(e) {
     panel.classList.remove('open');
   }
 });
-
 function toggleDarkMode() {
-  var tg = document.getElementById('tgDark');
-  tg.classList.toggle('on');
-  document.body.classList.toggle('acc-dark');
-  document.body.classList.remove('acc-contraste');
-  document.getElementById('tgContraste').classList.remove('on');
-}
-
-function toggleAltoContraste() {
-  var tg = document.getElementById('tgContraste');
-  tg.classList.toggle('on');
-  document.body.classList.toggle('acc-contraste');
-  document.body.classList.remove('acc-dark');
-  document.getElementById('tgDark').classList.remove('on');
-}
-
-function toggleDislexia() {
-  var tg = document.getElementById('tgDislexia');
-  tg.classList.toggle('on');
-  document.body.classList.toggle('acc-dislexia');
-}
-
-function toggleLector() {
-  var tg = document.getElementById('tgLector');
-  tg.classList.toggle('on');
-  accLector = !accLector;
-  if (!accLector && window.speechSynthesis) {
-    window.speechSynthesis.cancel();
+  var on = document.getElementById('tgDark').classList.toggle('on');
+  document.body.classList.toggle('acc-dark', on);
+  if (on) {
+    document.body.classList.remove('acc-contraste');
+    document.getElementById('tgContraste').classList.remove('on');
+    document.getElementById('btnContraste').classList.remove('activo');
   }
+  document.getElementById('btnDark').classList.toggle('activo', on);
 }
-
+function toggleAltoContraste() {
+  var on = document.getElementById('tgContraste').classList.toggle('on');
+  document.body.classList.toggle('acc-contraste', on);
+  if (on) {
+    document.body.classList.remove('acc-dark');
+    document.getElementById('tgDark').classList.remove('on');
+    document.getElementById('btnDark').classList.remove('activo');
+  }
+  document.getElementById('btnContraste').classList.toggle('activo', on);
+}
+function toggleDislexia() {
+  var on = document.getElementById('tgDislexia').classList.toggle('on');
+  document.body.classList.toggle('acc-dislexia', on);
+  document.getElementById('btnDislexia').classList.toggle('activo', on);
+}
 function setTamano(t) {
-  document.querySelectorAll('.acc-size-btn').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById('size' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('active');
+  document.querySelectorAll('.acc-tamano-btn').forEach(function(b){ b.classList.remove('active'); });
+  var ids = { normal:'sizeNormal', grande:'sizeGrande', extra:'sizeExtra' };
+  document.getElementById(ids[t]).classList.add('active');
   document.body.classList.remove('acc-size-grande','acc-size-extra');
   if (t === 'grande') document.body.classList.add('acc-size-grande');
   if (t === 'extra')  document.body.classList.add('acc-size-extra');
 }
-
-document.addEventListener('mouseover', function(e) {
+function toggleLector() {
+  var on = document.getElementById('tgLector').classList.toggle('on');
+  accLector = on;
+  document.getElementById('btnLector').classList.toggle('activo', on);
+  if (!on && window.speechSynthesis) window.speechSynthesis.cancel();
+}
+document.addEventListener('mouseup', function() {
   if (!accLector) return;
-  var texto = '';
-  var el = e.target;
-  if (el.tagName === 'IMG') {
-    texto = el.alt || '';
-  } else if (el.tagName === 'INPUT' || el.tagName === 'BUTTON') {
-    texto = el.value || el.textContent || el.getAttribute('aria-label') || '';
-  } else {
-    texto = el.textContent ? el.textContent.trim().slice(0, 200) : '';
-  }
-  if (!texto || texto.length < 2) return;
+  var sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  var texto = sel.toString().trim();
+  if (texto.length < 2) return;
   if (window.speechSynthesis) {
-    clearTimeout(accVozTimeout);
-    accVozTimeout = setTimeout(function() {
-      window.speechSynthesis.cancel();
-      var utter = new SpeechSynthesisUtterance(texto);
-      utter.lang = 'es-ES';
-      utter.rate = 1;
-      window.speechSynthesis.speak(utter);
-    }, 400);
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(texto);
+    u.lang = 'es-ES'; u.rate = 0.95;
+    window.speechSynthesis.speak(u);
   }
-});
-
-
-document.addEventListener('click', function(e) {
-  var btn = e.target.closest('[onclick*="blog-juegos"]');
-  if (btn) setTimeout(verificarCuponesCanjeados, 300);
 });
